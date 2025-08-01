@@ -1,0 +1,289 @@
+:root {
+    /* Paleta galaxia suavizada */
+    --clr-purple: #6b5b95;
+    --clr-pink: #d4a5a5;
+    --clr-blue: #7895b2;
+    --clr-darkblue: #1e1e2f;
+    --clr-magenta: #a084ac;
+    --bg-dark: #121223;
+    --font-main: 'Nunito', sans-serif;
+}
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg-dark);
+    font-family: var(--font-main);
+    color: #cbc7e1;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 4rem;
+    position: relative;
+    z-index: 0;
+}
+
+canvas#galaxy-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: var(--bg-dark);
+    display: block;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: radial-gradient(ellipse at center, #252538cc 0%, #121223ee 90%);
+    border-bottom: 1px solid #443d5a;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 1000;
+    box-shadow: 0 0 15px var(--clr-purple);
+    backdrop-filter: blur(8px);
+    gap: 1rem;
+}
+
+nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    user-select: none;
+    color: var(--clr-magenta);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.15rem;
+    filter: drop-shadow(0 0 5px var(--clr-pink));
+    transition: color 0.3s ease;
+}
+
+nav .logo img {
+    height: 100px;
+    width: auto;
+    border-radius: 10px;
+    filter: drop-shadow(0 0 5px var(--clr-pink));
+}
+
+nav .logo:hover {
+    color: var(--clr-pink);
+    text-shadow: 0 0 10px var(--clr-pink);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+    margin-left: auto;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #cbc7e1;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease;
+    user-select: none;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    color: var(--clr-pink);
+    border-bottom-color: var(--clr-pink);
+    outline: none;
+    text-shadow: 0 0 8px var(--clr-pink);
+}
+
+.projects-section {
+    margin-top: 130px;
+    max-width: 72rem;
+    width: 100%;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--clr-pink);
+    user-select: none;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Estilos generales para .card */
+.card {
+    position: relative;
+    background: #1f1e2fdd;
+    border-radius: 2rem;
+    max-width: 16rem;
+    min-height: 14rem;
+    width: 100%;
+    box-shadow: 0 0 8px var(--clr-pink), 0 15px 25px rgba(0, 0, 0, 0.75);
+    color: #d6ceeaff;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    overflow: hidden;
+    user-select: none;
+    padding: 2rem 1.5rem;
+    backdrop-filter: saturate(140%) blur(6px);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 0 18px var(--clr-pink), 0 25px 35px rgba(135, 100, 140, 0.8);
+}
+
+/* Colores para las cards según clase */
+.card.green {
+    background: radial-gradient(ellipse at right top, #52487aee 0%, var(--bg-dark) 70%, var(--bg-dark) 100%);
+    border: 2px solid var(--clr-purple);
+    box-shadow: 0 0 12px var(--clr-purple);
+}
+
+.card.blue {
+    background: radial-gradient(ellipse at right top, #5c799bcc 0%, var(--bg-dark) 70%, var(--bg-dark) 100%);
+    border: 2px solid var(--clr-blue);
+    box-shadow: 0 0 12px var(--clr-blue);
+}
+
+.card.orange {
+    background: radial-gradient(ellipse at right top, #d1a5a5cc 0%, var(--bg-dark) 70%, var(--bg-dark) 100%);
+    border: 2px solid var(--clr-pink);
+    box-shadow: 0 0 12px var(--clr-pink);
+}
+
+.card-header {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #c2bde6;
+    margin-bottom: 1rem;
+    user-select: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.card-body h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: #b8aee1;
+}
+
+.card-body p {
+    font-size: 0.95rem;
+    color: #b6a7bacc;
+    line-height: 1.4;
+}
+
+/* Responsivo */
+@media (max-width: 720px) {
+    nav {
+        padding: 0 1rem;
+        height: 100px;
+    }
+
+    nav ul {
+        gap: 1.5rem;
+    }
+
+    .projects-section {
+        max-width: 90vw;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .projects-section .card {
+        max-width: 100%;
+    }
+}
+
+
+
+
+.footer {
+    background: radial-gradient(ellipse at center, #252538cc 0%, #121223ee 90%);
+    border-top: 2px solid var(--clr-pink);
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 -4px 15px var(--clr-pink);
+    backdrop-filter: saturate(140%) blur(8px);
+    color: var(--clr-pink);
+    user-select: none;
+}
+
+.footer-content {
+    max-width: 24rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer h2 {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    color: var(--clr-pink);
+    filter: drop-shadow(0 0 8px var(--clr-pink));
+}
+
+.footer p {
+    font-size: 1rem;
+    color: #d4a5a5cc;
+    font-weight: 600;
+}
+
+.qr-code {
+    width: 140px;
+    height: 140px;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px var(--clr-pink);
+    filter: drop-shadow(0 0 12px var(--clr-pink));
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.qr-code:hover,
+.qr-code:focus {
+    transform: scale(1.1);
+    outline: none;
+    filter: drop-shadow(0 0 20px var(--clr-pink));
+}
+
+/* Footer responsivo */
+@media (max-width: 480px) {
+    .footer-content {
+        max-width: 90vw;
+    }
+}

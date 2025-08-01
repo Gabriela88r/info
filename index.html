@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Desarrollo Web Futurista Espacial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+
+    <!-- Canvas Galaxy Background -->
+    <canvas id="galaxy-canvas"></canvas>
+
+    <!-- NAVBAR con logo -->
+    <nav>
+        <div class="logo" tabindex="0" aria-label="Logo C.T.P. de Aserrí">
+            <img src="/escudo-sin-fondo_mesa-de-trabajo-1.webp" alt="Logo C.T.P. de Aserrí" />
+            Desarrollo Web
+        </div>
+        <ul>
+            <li><a href="#" tabindex="0">Inicio</a></li>
+            <li><a href="#" tabindex="0">Nosotros</a></li>
+            <li><a href="#" tabindex="0">Contacto</a></li>
+        </ul>
+    </nav>
+    <!-- SECCIÓN con proyectos destacados en Soporte Técnico -->
+    <section aria-label="Proyectos destacados" class="projects-section">
+        <header class="section-header" tabindex="0">
+            <h2>Proyectos Destacados</h2>
+            <p>Descubre cómo brindamos soporte técnico eficiente e innovador</p>
+        </header>
+
+        <div class="cards-container">
+            <!-- Tarjeta principal: Mantenimiento Preventivo -->
+            <article class="card green" tabindex="0" aria-label="Proyecto destacado Mantenimiento Preventivo">
+                <header class="card-header">Mantenimiento</header>
+                <div class="card-body">
+                    <h3>Prevención es productividad</h3>
+                    <p>Implementamos rutinas de mantenimiento preventivo para asegurar el rendimiento óptimo de los
+                        equipos.</p>
+                </div>
+            </article>
+
+            <!-- Tarjeta 2: Soporte Técnico -->
+            <article class="card blue" tabindex="0" aria-label="Proyecto destacado Soporte Técnico">
+                <header class="card-header">Soporte Técnico</header>
+                <div class="card-body">
+                    <h3>Soluciones rápidas y efectivas</h3>
+                    <p>Atendemos incidencias con enfoque resolutivo y acompañamiento personalizado al usuario.</p>
+                </div>
+            </article>
+
+            <!-- Tarjeta 3: Redes y Comunicaciones -->
+            <article class="card orange" tabindex="0" aria-label="Proyecto destacado Redes y Comunicaciones">
+                <header class="card-header">Redes</header>
+                <div class="card-body">
+                    <h3>Conectividad asegurada</h3>
+                    <p>Diseño, configuración y mantenimiento de redes para una comunicación eficiente y segura.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- NUEVA SECCIÓN: Juegos interactivos -->
+    <section aria-label="Juegos interactivos" class="games-section" style="margin-top: 3rem;">
+        <header class="section-header" tabindex="0">
+            <h2>Juegos Interactivos</h2>
+            <p>Diviértete con estos tres juegos diseñados para practicar y aprender desarrollo web</p>
+        </header>
+
+        <div class="cards-container">
+            <!-- Juego 1 -->
+            <article class="card purple" tabindex="0" aria-label="Juego Pong">
+                <header class="card-header">Juego de Memoria</header>
+                <div class="card-body">
+                    <h3>Ejercita tu mente</h3>
+                    <p>Encuentra las parejas de cartas iguales antes que el tiempo se acabe.</p>
+                    <a href="/juego1.html" class="card-link" tabindex="0">Juego de memoria</a>
+                </div>
+            </article>
+
+            <!-- Juego 2 -->
+            <article class="card teal" tabindex="0" aria-label="Juego Memoria">
+                <header class="card-header">Juego de Tres en raya </header>
+                <div class="card-body">
+                    <h3>Divertido!</h3>
+                    <p>Has una línea para ganar.</p>
+                    <a href="/juego2.html" class="card-link" tabindex="0">Jugar de tres rayas</a>
+                </div>
+            </article>
+
+            <!-- Juego 3 -->
+            <article class="card red" tabindex="0" aria-label="Juego Trivia Web">
+                <header class="card-header">Lógica matemática</header>
+                <div class="card-body">
+                    <h3>Pon a prueba tus conocimientos</h3>
+                    <p>Responde preguntas.</p>
+                    <a href="/juego3.html" class="card-link" tabindex="0">Jugar Lógica</a>
+                </div>
+            </article>
+        </div>
+    </section>
+    <footer aria-label="Contacto QR" class="footer">
+        <div class="footer-content">
+            <h2 tabindex="0">Contacto Rápido</h2>
+            <p tabindex="0">Escanea el código QR para guardar nuestro contacto</p>
+            <img src="/qrcode_ctpdeaserridiurno.com.png" alt="Código QR de contacto" class="qr-code" />
+        </div>
+    </footer>
+
+
+    <script src="/java.js"></script>
+</body>
+
+</html>

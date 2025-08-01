@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🌍 Lógica Matemática</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            background-color: #000;
+            color: #00ffff;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 600px;
+            margin: auto;
+            border: 3px solid #00ffff;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #111;
+            box-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .pregunta {
+            font-size: 1em;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        button {
+            background-color: #00ffff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 5px #00ffff, 0 0 10px #ff00ff;
+        }
+
+        button:hover {
+            background-color: #ff00ff;
+            color: #fff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .nivel,
+        .puntuacion {
+            font-size: 0.8em;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .temporizador {
+            font-size: 0.9em;
+            color: #ff0;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+        }
+
+        .botones {
+            margin-top: 20px;
+        }
+
+        .respuesta {
+            font-size: 1em;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .final {
+            font-size: 1.1em;
+            color: #0f0;
+            margin-top: 20px;
+            animation: parpadeo 1s infinite;
+            white-space: pre-line;
+        }
+
+        @keyframes parpadeo {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">
+        <h1>🌍 LÓGICA MATEMÁTICA</h1>
+        <div class="nivel" id="nivel"></div>
+        <div class="puntuacion" id="puntos"></div>
+        <div class="temporizador" id="temporizador">⏳ Tiempo: 30s</div>
+        <div class="pregunta" id="pregunta"></div>
+        <div class="botones">
+            <button onclick="responder('V')">Verdadero</button>
+            <button onclick="responder('F')">Falso</button>
+        </div>
+        <div class="respuesta" id="respuesta"></div>
+        <div class="final" id="final"></div>
+    </div>
+
+    <script>
+        // Sonidos
+        const sonidoCorrecto = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3");
+        const sonidoIncorrecto = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-buzzer-2964.mp3");
+        const sonidoTiempo = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-tick-tock-clock-timer-1045.mp3");
+
+        const preguntas = [
+            { texto: "Si reciclamos (p) → reducimos contaminación (q).\np=V, q=F\n¿p → q?", resultado: "F" },
+            { texto: "¬p ∨ q con p=V, q=F", resultado: "F" },
+            { texto: "p ∧ q con p=V, q=V", resultado: "V" },
+            { texto: "¬p ∧ q con p=F, q=V", resultado: "V" },
+            { texto: "p ∨ q con p=F, q=F", resultado: "F" },
+            { texto: "p → q con p=F, q=V", resultado: "V" },
+            { texto: "p ↔ q con p=V, q=V", resultado: "V" },
+            { texto: "¬(p ∨ q) con p=F, q=F", resultado: "V" },
+            { texto: "(p ∧ ¬q) → r con p=V,q=F,r=F", resultado: "V" },
+            { texto: "p ∨ (q ∧ r) con p=F,q=V,r=V", resultado: "V" },
+            { texto: "Si sembramos árboles (p) → se reduce el CO2 (q).\np=V, q=V\n¿p → q?", resultado: "V" },
+            { texto: "No usar bolsas plásticas (p) ∧ reciclar papel (q).\np=V, q=F\n¿p ∧ q?", resultado: "F" },
+            { texto: "Si apagamos las luces (p) → ahorramos energía (q).\np=V, q=V\n¿p → q?", resultado: "V" },
+            { texto: "¬p ∨ ¬q con p=F, q=F", resultado: "V" },
+            { texto: "Si desperdiciamos agua (p) → el planeta se afecta (q).\np=V, q=V\n¿p → q?", resultado: "V" },
+            { texto: "p ↔ ¬q con p=V, q=F", resultado: "V" },
+            { texto: "¬(p ∧ q) ∨ r con p=V, q=F, r=F", resultado: "V" },
+            { texto: "((p → q) ∧ (q → r)) → (p → r)\np=V, q=F, r=V", resultado: "V" },
+            { texto: "(¬p ∨ q) ↔ (p → q)\np=V, q=F", resultado: "V" },
+            { texto: "(p ↔ q) ∨ (r ∧ ¬s)\np=F, q=F, r=V, s=F", resultado: "V" },
+            { texto: "¬((p ∧ q) ∨ ¬r) con p=V, q=V, r=F", resultado: "F" },
+            { texto: "(p ∧ (q → r)) → (p ∧ q) → r\np=V, q=V, r=F", resultado: "F" }
+        ];
+
+        let nivel = 1, puntos = 0;
+        let usadas = new Set();
+        let tiempoRestante = 30;
+        let temporizadorID;
+
+        function cargarPregunta() {
+            clearInterval(temporizadorID);
+            sonidoTiempo.pause();
+            sonidoTiempo.currentTime = 0;
+            tiempoRestante = 30;
+
+            const temporizadorElem = document.getElementById("temporizador");
+            temporizadorElem.innerText = `⏳ Tiempo: ${tiempoRestante}s`;
+            temporizadorElem.style.color = "#ff0";
+
+            if (nivel > 10) {
+                document.getElementById("pregunta").innerText = "";
+                document.querySelector(".botones").innerHTML = '<button onclick="reiniciarJuego()">🔄 Jugar de nuevo</button>';
+                document.getElementById("final").innerText = `🎉 ¡Juego terminado! Puntaje: ${puntos}/10\n🌿 ¡Cada respuesta cuenta para salvar el planeta!`;
+                return;
+            }
+
+            document.getElementById("nivel").innerText = `Nivel ${nivel} de 10`;
+            document.getElementById("puntos").innerText = `Puntos: ${puntos}`;
+
+            let idx;
+            do {
+                idx = Math.floor(Math.random() * preguntas.length);
+            } while (usadas.has(idx) && usadas.size < preguntas.length);
+
+            usadas.add(idx);
+            window.actual = preguntas[idx];
+            document.getElementById("pregunta").innerText = window.actual.texto;
+
+            temporizadorID = setInterval(() => {
+                tiempoRestante--;
+                temporizadorElem.innerText = `⏳ Tiempo: ${tiempoRestante}s`;
+
+                if (tiempoRestante === 5) {
+                    sonidoTiempo.play();
+                    temporizadorElem.style.color = "#ff4444"; // rojo
+                }
+
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizadorID);
+                    sonidoTiempo.pause();
+                    sonidoTiempo.currentTime = 0;
+                    document.getElementById("respuesta").innerText = `⏰ Tiempo agotado. La respuesta era: ${window.actual.resultado}`;
+                    document.getElementById("respuesta").style.color = "#f00";
+                    nivel++;
+                    setTimeout(() => {
+                        document.getElementById("respuesta").innerText = "";
+                        cargarPregunta();
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function responder(res) {
+            clearInterval(temporizadorID);
+            sonidoTiempo.pause();
+            sonidoTiempo.currentTime = 0;
+
+            const correcto = res === window.actual.resultado;
+            const respuestaTexto = document.getElementById("respuesta");
+
+            if (correcto) {
+                puntos++;
+                sonidoCorrecto.play();
+                respuestaTexto.innerText = "✅ ¡Correcto!";
+                respuestaTexto.style.color = "#0f0";
+            } else {
+                sonidoIncorrecto.play();
+                respuestaTexto.innerText = `❌ Incorrecto. La respuesta correcta era: ${window.actual.resultado}`;
+                respuestaTexto.style.color = "#f00";
+            }
+
+            nivel++;
+            setTimeout(() => {
+                respuestaTexto.innerText = "";
+                cargarPregunta();
+            }, 1500);
+        }
+
+        function reiniciarJuego() {
+            nivel = 1;
+            puntos = 0;
+            usadas.clear();
+            document.getElementById("final").innerText = "";
+            document.getElementById("respuesta").innerText = "";
+            document.querySelector(".botones").innerHTML = `
+        <button onclick="responder('V')">Verdadero</button>
+        <button onclick="responder('F')">Falso</button>
+      `;
+            cargarPregunta();
+        }
+
+        cargarPregunta();
+    </script>
+</body>
+
+</html>
